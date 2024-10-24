@@ -11,25 +11,18 @@ public class gamePanel extends JPanel implements Runnable {
 
     // screen settings
     final int originalTileSize  = 16; // 16x16 tile
-    final int scale = 3; // scale the tile by 3
+    final int scale = 4; // scale the tile by 4
 
-    final int tileSize = originalTileSize * scale; // 48x48 tile
+    public final int tileSize = originalTileSize * scale; // 64x64 pixels
     final int maxScreenCol = 20; // 20 tiles wide
     final int maxScreenRow = 16; // 16 tiles tall
 
-    final int screenWidth = tileSize * maxScreenCol; // 960 pixels wide
-    final int screenHeigth = tileSize * maxScreenRow; // 768 pixels tall
+    final int screenWidth = tileSize * maxScreenCol; // 1280 pixels wide
+    final int screenHeigth = tileSize * maxScreenRow; // 1024 pixels tall
 
     KeyHandler keyH = new KeyHandler(); // create a new keyhandler object
     Thread gameThread; // thread to run the game
     player player = new player(this, keyH); // create a new player object
-
-    // set players default position
-    int playerX = 100; // 100 pixels from the left
-    int playerY = 100; // 100 pixels from the top
-    int playerSpeed = 4; // 4 pixels per frame
-
-
 
     public gamePanel() { // constructor
 
@@ -78,18 +71,7 @@ public class gamePanel extends JPanel implements Runnable {
 
     public void update(){
 
-            if (keyH.up){ // if the up key is pressed
-                playerY -= playerSpeed;
-            }
-            if (keyH.down){ // if the down key is pressed
-                playerY += playerSpeed;
-            }
-            if (keyH.left){ // if the left key is pressed
-                playerX -= playerSpeed;
-            }
-            if (keyH.right){ // if the right key is presse
-                playerX += playerSpeed;
-            }
+        player.update(); // update the player
     }
 
     public void paintComponent ( Graphics g){
@@ -98,9 +80,7 @@ public class gamePanel extends JPanel implements Runnable {
 
         Graphics2D g2 = (Graphics2D) g; // cast the graphics object to graphics2d
 
-        g2.setColor(Color.white); // set the color to white
-
-        g2.fillRect(playerX, playerY, tileSize, tileSize); // draw a white rectangle at 100, 100
+        player.draw(g2); // draw the player
 
         g2.dispose(); // dispose the graphics object
     }
