@@ -4,6 +4,7 @@ import java.awt.Dimension; // to use dimension
 import java.awt.Graphics; // to use graphics
 import java.awt.Graphics2D; // to use 2D graphics
 import entity.player; // to use the player class
+import tile.tileManager;
 
 import javax.swing.*;
 
@@ -14,12 +15,13 @@ public class gamePanel extends JPanel implements Runnable {
     final int scale = 4; // scale the tile by 4
 
     public final int tileSize = originalTileSize * scale; // 64x64 pixels
-    final int maxScreenCol = 20; // 20 tiles wide
-    final int maxScreenRow = 16; // 16 tiles tall
+    public final int maxScreenCol = 20; // 20 tiles wide
+    public final int maxScreenRow = 16; // 16 tiles tall
 
-    final int screenWidth = tileSize * maxScreenCol; // 1280 pixels wide
-    final int screenHeigth = tileSize * maxScreenRow; // 1024 pixels tall
+    public final int screenWidth = tileSize * maxScreenCol; // 1280 pixels wide
+    public final int screenHeigth = tileSize * maxScreenRow; // 1024 pixels tall
 
+    tileManager tm = new tileManager(this); // create a new tilemanager object
     KeyHandler keyH = new KeyHandler(); // create a new keyhandler object
     Thread gameThread; // thread to run the game
     player player = new player(this, keyH); // create a new player object
@@ -80,6 +82,7 @@ public class gamePanel extends JPanel implements Runnable {
 
         Graphics2D g2 = (Graphics2D) g; // cast the graphics object to graphics2d
 
+        tm.draw(g2); // draw the tile
         player.draw(g2); // draw the player
 
         g2.dispose(); // dispose the graphics object
